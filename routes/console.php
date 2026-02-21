@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\CheckForScheduledPingTargets;
 use App\Actions\CheckForScheduledSpeedtests;
 use Illuminate\Support\Facades\Schedule;
 
@@ -27,4 +28,5 @@ Schedule::daily()
 Schedule::everyMinute()
     ->group(function () {
         Schedule::call(fn () => CheckForScheduledSpeedtests::run());
+        Schedule::call(fn () => CheckForScheduledPingTargets::run());
     });
