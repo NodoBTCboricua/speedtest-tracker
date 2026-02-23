@@ -21,6 +21,7 @@ class PingResult extends Model
     protected $fillable = [
         'ping_target_id',
         'latency',
+        'packet_loss',
         'is_reachable',
     ];
 
@@ -33,6 +34,7 @@ class PingResult extends Model
     {
         return [
             'latency' => 'float',
+            'packet_loss' => 'float',
             'is_reachable' => 'boolean',
         ];
     }

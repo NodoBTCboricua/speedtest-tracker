@@ -29,6 +29,7 @@ class RunPingTargetJob implements ShouldQueue
         if ($result === null) {
             $this->pingTarget->pingResults()->create([
                 'latency' => null,
+                'packet_loss' => null,
                 'is_reachable' => false,
             ]);
 
@@ -36,10 +37,12 @@ class RunPingTargetJob implements ShouldQueue
         }
 
         $latency = $result->averageTimeInMs();
+        $packetLoss = $result->packetLossPercentage();
         $isReachable = $result->isSuccess();
 
         $this->pingTarget->pingResults()->create([
             'latency' => $isReachable ? round($latency, 3) : null,
+            'packet_loss' => (float) $packetLoss,
             'is_reachable' => $isReachable,
         ]);
     }
