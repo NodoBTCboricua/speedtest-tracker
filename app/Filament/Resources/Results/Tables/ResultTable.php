@@ -44,11 +44,11 @@ class ResultTable
 
                 TextColumn::make('data.interface.externalIp')
                     ->label(__('results.ip_address'))
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 TextColumn::make('service')
                     ->label(__('results.service'))
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 ResultServerColumn::make('server')
                     ->label(__('general.server'))
@@ -275,6 +275,9 @@ class ResultTable
             ->paginationPageOptions([10, 25, 50])
             ->poll('60s')
             ->persistFiltersInSession()
+            ->persistSortInSession()
+            ->persistSearchInSession()
+            ->persistColumnSearchesInSession()
             ->persistColumnsInSession();
     }
 }
