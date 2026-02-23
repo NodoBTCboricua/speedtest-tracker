@@ -12,7 +12,7 @@ return [
     'name' => 'Name',
     'host' => 'Host',
     'host_placeholder' => 'example.com or 192.168.1.1',
-    'interval_seconds' => 'Interval (seconds)',
+    'interval_seconds' => 'Interval',
     'interval_seconds_help' => 'How often to ping this host. Minimum 1 second. For intervals less than 60 seconds, multiple pings are scheduled within each minute.',
     'packet_count' => 'Packet Count',
     'is_active' => 'Active',

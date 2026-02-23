@@ -37,7 +37,15 @@ class PingTargetTable
                 TextColumn::make('interval_seconds')
                     ->label(__('ping.interval_seconds'))
                     ->sortable()
-                    ->suffix(' s')
+                    ->formatStateUsing(function ($state) {
+                        if ($state >= 3600) {
+                            return round($state / 3600, 1) . 'h';
+                        }
+                        if ($state >= 60) {
+                            return round($state / 60, 1) . 'm';
+                        }
+                        return $state . 's';
+                    })
                     ->toggleable(isToggledHiddenByDefault: false),
 
                 IconColumn::make('is_active')

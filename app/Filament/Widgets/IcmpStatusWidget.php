@@ -35,12 +35,15 @@ class IcmpStatusWidget extends BaseWidget
                 $packetLoss = $latestResult->packet_loss ?? 100;
                 $isReachable = $latestResult->is_reachable;
 
+                // Calculate average of displayed chart data
+                $avgLatency = count($chartData) > 0 ? array_sum($chartData) / count($chartData) : 0;
+
                 // User logic: < 100% loss = Online, 100% loss = Offline
                 // Also consider is_reachable flag
                 if ($isReachable && $packetLoss < 100) {
                     $status = 'Online';
                     $color = 'success';
-                    $description = "Loss: " . round($packetLoss, 1) . "% | " . round($latestResult->latency, 1) . "ms";
+                    $description = "Loss: " . round($packetLoss, 1) . "% | " . round($latestResult->latency, 1) . "ms | Avg: " . round($avgLatency, 1) . "ms";
                 } else {
                     $status = 'Offline';
                     $color = 'danger';

@@ -91,6 +91,23 @@ services:
             - sail
         depends_on:
             - pgsql
+    queue:
+        build:
+            context: ./docker/8.4
+            dockerfile: Dockerfile
+            args:
+                WWWGROUP: '${WWWGROUP}'
+        image: speedtest-tracker-8.4/app
+        command: php artisan queue:work
+        environment:
+            WWWUSER: '${WWWUSER}'
+            LARAVEL_SAIL: 1
+        volumes:
+            - '.:/var/www/html'
+        networks:
+            - sail
+        depends_on:
+            - pgsql
 networks:
     sail:
         driver: bridge

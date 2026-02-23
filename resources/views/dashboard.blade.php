@@ -6,6 +6,8 @@
 
         <livewire:latest-result-stats />
 
+        @livewire(\App\Filament\Widgets\IcmpStatusWidget::class)
+
         <div class="grid grid-cols-1 gap-6">
             <h2 class="flex items-center gap-x-2 text-base md:text-lg font-semibold text-zinc-900 dark:text-zinc-100 col-span-full">
                 <x-tabler-chart-histogram class="size-5" />
