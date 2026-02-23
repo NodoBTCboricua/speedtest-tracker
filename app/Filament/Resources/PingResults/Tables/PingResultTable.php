@@ -2,6 +2,9 @@
 
 namespace App\Filament\Resources\PingResults\Tables;
 
+use App\Filament\Exports\PingResultExporter;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\ExportAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -83,6 +86,15 @@ class PingResultTable
                                 fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
                             );
                     }),
+            ])
+            ->toolbarActions([
+                DeleteBulkAction::make(),
+                ExportAction::make()
+                    ->exporter(PingResultExporter::class)
+                    ->columnMapping(false)
+                    ->modalHeading(__('results.export_all_results'))
+                    ->modalDescription(__('results.export_all_results_description'))
+                    ->fileName(fn (): string => 'ping-results-'.now()->timestamp),
             ])
             ->defaultSort('created_at', 'desc')
             ->poll('60s');

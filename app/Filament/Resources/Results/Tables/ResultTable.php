@@ -273,6 +273,8 @@ class ResultTable
             ])
             ->defaultSort('id', 'desc')
             ->paginationPageOptions([10, 25, 50])
-            ->poll('60s');
+            ->poll('60s')
+            ->persistFiltersInSession()
+            ->persistColumnsInSession();
     }
 }
