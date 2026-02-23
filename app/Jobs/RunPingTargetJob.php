@@ -24,7 +24,7 @@ class RunPingTargetJob implements ShouldQueue
      */
     public function handle(PingHostname $pingHostname): void
     {
-        $result = $pingHostname->run($this->pingTarget->host);
+        $result = $pingHostname->run($this->pingTarget->host, $this->pingTarget->packet_count ?? 1);
 
         if ($result === null) {
             $this->pingTarget->pingResults()->create([

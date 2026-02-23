@@ -16,6 +16,7 @@ class PingTarget extends Model
         'name',
         'host',
         'interval_seconds',
+        'packet_count',
         'is_active',
     ];
 
@@ -27,6 +28,7 @@ class PingTarget extends Model
     protected function casts(): array
     {
         return [
+            'packet_count' => 'integer',
             'is_active' => 'boolean',
         ];
     }

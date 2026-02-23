@@ -37,6 +37,13 @@ class PingTargetForm
                                 ->default(60)
                                 ->suffix('s'),
 
+                            TextInput::make('packet_count')
+                                ->label(__('ping.packet_count'))
+                                ->numeric()
+                                ->minValue(1)
+                                ->required()
+                                ->default(1),
+
                             Checkbox::make('is_active')
                                 ->label(__('ping.is_active'))
                                 ->default(true),
