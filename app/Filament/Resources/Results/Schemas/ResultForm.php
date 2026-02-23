@@ -6,9 +6,9 @@ use App\Helpers\Number;
 use App\Models\Result;
 use Carbon\Carbon;
 use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Illuminate\Support\HtmlString;
@@ -100,27 +100,27 @@ class ResultForm
 
                     // Right column: Server & Metadata
                     Section::make(__('results.server_&_metadata'))->schema([
-                        TextEntry::make('service')
+                        Placeholder::make('service')
                             ->label(__('results.service'))
-                            ->state(fn (Result $result): string => $result->service->getLabel()),
-                        TextEntry::make('server_name')
+                            ->content(fn (Result $result): string => $result->service->getLabel()),
+                        Placeholder::make('server_name')
                             ->label(__('results.server_name'))
-                            ->state(fn (Result $result): ?string => $result->server_name),
-                        TextEntry::make('server_id')
+                            ->content(fn (Result $result): ?string => $result->server_name),
+                        Placeholder::make('server_id')
                             ->label(__('results.server_id'))
-                            ->state(fn (Result $result): ?string => $result->server_id),
-                        TextEntry::make('isp')
+                            ->content(fn (Result $result): ?string => $result->server_id),
+                        Placeholder::make('isp')
                             ->label(__('results.isp'))
-                            ->state(fn (Result $result): ?string => $result->isp),
-                        TextEntry::make('server_location')
+                            ->content(fn (Result $result): ?string => $result->isp),
+                        Placeholder::make('server_location')
                             ->label(__('results.server_location'))
-                            ->state(fn (Result $result): ?string => $result->server_location),
-                        TextEntry::make('server_host')
+                            ->content(fn (Result $result): ?string => $result->server_location),
+                        Placeholder::make('server_host')
                             ->label(__('results.server_host'))
-                            ->state(fn (Result $result): ?string => $result->server_host),
-                        TextEntry::make('comment')
+                            ->content(fn (Result $result): ?string => $result->server_host),
+                        Placeholder::make('comment')
                             ->label(__('general.comment'))
-                            ->state(fn (Result $result): ?string => $result->comments),
+                            ->content(fn (Result $result): ?string => $result->comments),
                         Checkbox::make('scheduled')
                             ->label(__('results.scheduled')),
                         Checkbox::make('healthy')
