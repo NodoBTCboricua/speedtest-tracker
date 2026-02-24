@@ -18,6 +18,8 @@ class PingTargetResource extends Resource
 
     protected static string|\BackedEnum|null $navigationIcon = 'tabler-broadcast';
 
+    protected static \UnitEnum|string|null $navigationGroup = 'Monitor de Ping';
+
     public static function getNavigationLabel(): string
     {
         return __('ping.ping_targets');
@@ -50,5 +52,10 @@ class PingTargetResource extends Resource
             'create' => CreatePingTarget::route('/create'),
             'edit' => EditPingTarget::route('/{record}/edit'),
         ];
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'host'];
     }
 }

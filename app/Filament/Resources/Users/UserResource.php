@@ -51,4 +51,9 @@ class UserResource extends Resource
             'index' => ListUsers::route('/'),
         ];
     }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'email'];
+    }
 }

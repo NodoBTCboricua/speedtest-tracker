@@ -71,6 +71,9 @@ class PingTargetTable
                     DeleteAction::make(),
                 ]),
             ])
-            ->defaultSort('id', 'desc');
+            ->defaultSort('id', 'desc')
+            ->persistFilters()
+            ->persistSort()
+            ->persistColumnVisibility();
     }
 }

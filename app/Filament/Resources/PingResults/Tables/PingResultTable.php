@@ -85,6 +85,9 @@ class PingResultTable
                     }),
             ])
             ->defaultSort('created_at', 'desc')
+            ->persistFilters()
+            ->persistSort()
+            ->persistColumnVisibility()
             ->poll('60s');
     }
 }

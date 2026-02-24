@@ -47,4 +47,9 @@ class ResultResource extends Resource
             'index' => ListResults::route('/'),
         ];
     }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['id', 'data->interface->externalIp', 'data->server->name', 'data->server->id'];
+    }
 }
