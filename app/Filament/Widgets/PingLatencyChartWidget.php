@@ -75,17 +75,7 @@ class PingLatencyChartWidget extends ChartWidget
             fn (Collection $group) => $group->keyBy(fn ($r) => $r->created_at->format('Y-m-d H:i:s'))
         );
 
-        $showAverageLine = true;
-
         foreach ($targets as $index => $target) {
-            $targetResults = $results->where('ping_target_id', $target->id);
-            $avgRounded = $showAverageLine
-                ? $targetResults->filter(fn ($r) => $r->latency !== null)->avg('latency')
-                : null;
-            if ($avgRounded !== null) {
-                $avgRounded = round($avgRounded, 2);
-            }
-
             $color = $colors[$index % count($colors)];
             $data = $labels->map(fn ($ts) => $resultsByTargetAndTime->get($target->id)?->get($ts->format('Y-m-d H:i:s'))?->latency);
 
@@ -101,19 +91,6 @@ class PingLatencyChartWidget extends ChartWidget
                 'pointRadius' => $labels->count() <= 24 ? 3 : 0,
                 'spanGaps' => true,
             ];
-
-            if ($avgRounded !== null) {
-                $datasets[] = [
-                    'label' => __('general.average'),
-                    'data' => array_fill(0, $labels->count(), $avgRounded),
-                    'borderColor' => 'rgb(243, 7, 6, 1)',
-                    'pointBackgroundColor' => 'rgb(243, 7, 6, 1)',
-                    'fill' => false,
-                    'cubicInterpolationMode' => 'monotone',
-                    'tension' => 0.4,
-                    'pointRadius' => 0,
-                ];
-            }
         }
 
         return [

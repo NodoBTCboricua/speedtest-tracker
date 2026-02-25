@@ -41,4 +41,23 @@ class Average
 
         return round($avgPing, $precision);
     }
+
+    /**
+     * Calculate a simple moving average for a collection of values.
+     */
+    public static function movingAverage(array|Collection $data, int $window = 10, int $precision = 2): array
+    {
+        $values = collect($data)->values();
+        $movingAverage = [];
+        $count = $values->count();
+
+        for ($i = 0; $i < $count; $i++) {
+            $start = max(0, $i - $window + 1);
+            $slice = $values->slice($start, $i - $start + 1);
+            $avg = $slice->avg();
+            $movingAverage[] = is_null($avg) ? null : round($avg, $precision);
+        }
+
+        return $movingAverage;
+    }
 }

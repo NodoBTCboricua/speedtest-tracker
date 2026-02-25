@@ -64,7 +64,9 @@ class RecentPingChartWidget extends ChartWidget
                 ],
                 [
                     'label' => __('general.average'),
-                    'data' => array_fill(0, count($results), Average::averagePing($results)),
+                    'data' => Average::movingAverage(
+                        $results->map(fn ($item) => $item->ping)
+                    ),
                     'borderColor' => 'rgb(243, 7, 6, 1)',
                     'pointBackgroundColor' => 'rgb(243, 7, 6, 1)',
                     'fill' => false,

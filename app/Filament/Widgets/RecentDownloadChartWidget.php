@@ -65,7 +65,9 @@ class RecentDownloadChartWidget extends ChartWidget
                 ],
                 [
                     'label' => __('general.average'),
-                    'data' => array_fill(0, count($results), Average::averageDownload($results)),
+                    'data' => Average::movingAverage(
+                        $results->map(fn ($item) => ! blank($item->download) ? Number::bitsToMagnitude(bits: $item->download_bits, precision: 2, magnitude: 'mbit') : null)
+                    ),
                     'borderColor' => 'rgb(243, 7, 6, 1)',
                     'pointBackgroundColor' => 'rgb(243, 7, 6, 1)',
                     'fill' => false,

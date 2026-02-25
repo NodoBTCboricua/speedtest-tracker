@@ -40,14 +40,16 @@ class IcmpStatusWidget extends BaseWidget
 
                 // User logic: < 100% loss = Online, 100% loss = Offline
                 // Also consider is_reachable flag
+                $lastRun = $latestResult->created_at->timezone(config('app.display_timezone'))->format('g:i a');
+
                 if ($isReachable && $packetLoss < 100) {
                     $status = 'Online';
                     $color = 'success';
-                    $description = "Loss: " . round($packetLoss, 1) . "% | " . round($latestResult->latency, 1) . "ms | Avg: " . round($avgLatency, 1) . "ms";
+                    $description = "Last: {$lastRun} | Loss: " . round($packetLoss, 1) . "% | " . round($latestResult->latency, 1) . "ms | Avg: " . round($avgLatency, 1) . "ms";
                 } else {
                     $status = 'Offline';
                     $color = 'danger';
-                    $description = "Loss: " . round($packetLoss, 1) . "%";
+                    $description = "Last: {$lastRun} | Loss: " . round($packetLoss, 1) . "%";
                 }
             }
 
