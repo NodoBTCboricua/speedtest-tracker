@@ -27,7 +27,11 @@ class PingTargetForm
                                 ->label(__('ping.host'))
                                 ->placeholder(__('ping.host_placeholder'))
                                 ->required()
-                                ->maxLength(255),
+                                ->maxLength(255)
+                                ->rules(['regex:/^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}|(\d{1,3}\.){3}\d{1,3}$/i'])
+                                ->validationMessages([
+                                    'regex' => 'The host must be a valid domain or IP address.',
+                                ]),
 
                             Select::make('interval_seconds')
                                 ->label(__('ping.interval_seconds'))

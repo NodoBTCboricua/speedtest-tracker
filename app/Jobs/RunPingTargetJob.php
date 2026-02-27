@@ -5,8 +5,11 @@ namespace App\Jobs;
 use App\Actions\PingHostname;
 use App\Models\PingResult;
 use App\Models\PingTarget;
+use App\Models\User;
+use App\Notifications\PingTargetOfflineNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Notification;
 
 class RunPingTargetJob implements ShouldQueue
 {
@@ -26,12 +29,14 @@ class RunPingTargetJob implements ShouldQueue
     {
         $result = $pingHostname->run($this->pingTarget->host, $this->pingTarget->packet_count ?? 1);
 
-        if ($result === null) {
+        if ($result === null || ! $result->isSuccess()) {
             $this->pingTarget->pingResults()->create([
                 'latency' => null,
-                'packet_loss' => null,
+                'packet_loss' => $result ? (float) $result->packetLossPercentage() : null,
                 'is_reachable' => false,
             ]);
+
+            $this->notifyAdmins();
 
             return;
         }
@@ -41,9 +46,16 @@ class RunPingTargetJob implements ShouldQueue
         $isReachable = $result->isSuccess();
 
         $this->pingTarget->pingResults()->create([
-            'latency' => $isReachable ? round($latency, 3) : null,
+            'latency' => round($latency, 3),
             'packet_loss' => (float) $packetLoss,
             'is_reachable' => $isReachable,
         ]);
+    }
+
+    protected function notifyAdmins(): void
+    {
+        $admins = User::where('role', \App\Enums\UserRole::Admin)->get();
+
+        Notification::send($admins, new PingTargetOfflineNotification($this->pingTarget));
     }
 }
