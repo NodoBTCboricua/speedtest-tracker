@@ -16,6 +16,8 @@ class ResultResource extends Resource
 
     protected static string|\BackedEnum|null $navigationIcon = 'tabler-table';
 
+    protected static \UnitEnum|string|null $navigationGroup = null;
+
     public static function getNavigationLabel(): string
     {
         return __('results.title');
@@ -46,5 +48,10 @@ class ResultResource extends Resource
         return [
             'index' => ListResults::route('/'),
         ];
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['id', 'data->interface->externalIp', 'data->server->name', 'data->server->id'];
     }
 }

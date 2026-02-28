@@ -18,6 +18,8 @@ class UserResource extends Resource
 
     protected static ?int $navigationSort = 4;
 
+    protected static \UnitEnum|string|null $navigationGroup = null;
+
     public static function getLabel(): ?string
     {
         return __('general.user');
@@ -50,5 +52,10 @@ class UserResource extends Resource
         return [
             'index' => ListUsers::route('/'),
         ];
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'email'];
     }
 }

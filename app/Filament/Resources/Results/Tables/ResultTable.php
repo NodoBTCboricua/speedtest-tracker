@@ -272,6 +272,9 @@ class ResultTable
                     ->fileName(fn (): string => 'results-'.now()->timestamp),
             ])
             ->defaultSort('id', 'desc')
+            ->persistFilters()
+            ->persistSort()
+            ->persistColumnVisibility()
             ->paginationPageOptions([10, 25, 50])
             ->poll('60s')
             ->persistFiltersInSession()

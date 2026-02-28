@@ -97,6 +97,9 @@ class PingResultTable
                     ->fileName(fn (): string => 'ping-results-'.now()->timestamp),
             ])
             ->defaultSort('created_at', 'desc')
+            ->persistFilters()
+            ->persistSort()
+            ->persistColumnVisibility()
             ->poll('60s');
     }
 }
