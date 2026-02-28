@@ -16,6 +16,8 @@ class ResultResource extends Resource
 
     protected static string|\BackedEnum|null $navigationIcon = 'tabler-table';
 
+    protected static \UnitEnum|string|null $navigationGroup = null;
+
     public static function getNavigationLabel(): string
     {
         return __('results.title');
