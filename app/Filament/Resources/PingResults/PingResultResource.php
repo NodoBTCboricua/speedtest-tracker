@@ -16,7 +16,7 @@ class PingResultResource extends Resource
 
     protected static string|\BackedEnum|null $navigationIcon = 'tabler-chart-line';
 
-    protected static \UnitEnum|string|null $navigationGroup = 'Monitor de Ping';
+    protected static string|\UnitEnum|null $navigationGroup = 'Monitor de Ping';
 
     public static function getNavigationLabel(): string
     {

@@ -27,6 +27,8 @@ class RunPingTargetJob implements ShouldQueue
      */
     public function handle(PingHostname $pingHostname): void
     {
+        $lastResult = $this->pingTarget->pingResults()->latest('created_at')->first();
+
         $result = $pingHostname->run($this->pingTarget->host, $this->pingTarget->packet_count ?? 1);
 
         if ($result === null || ! $result->isSuccess()) {
@@ -36,7 +38,9 @@ class RunPingTargetJob implements ShouldQueue
                 'is_reachable' => false,
             ]);
 
-            $this->notifyAdmins();
+            if ($lastResult === null || $lastResult->is_reachable) {
+                $this->notifyAdmins();
+            }
 
             return;
         }
